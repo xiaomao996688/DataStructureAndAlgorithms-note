@@ -171,7 +171,77 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="&#x961F;&#x91CC;&#x662F;&#x4E00;&#x79CD;&#x52A8;&#x6001;&#x7684;&#x96C6;&#x5408;&#x3002;">&#x961F;&#x91CC;&#x662F;&#x4E00;&#x79CD;&#x52A8;&#x6001;&#x7684;&#x96C6;&#x5408;&#x3002;</h2>
+                                <h2 id="&#x961F;&#x5217;">&#x961F;&#x5217;</h2>
+<p>&#x961F;&#x5217;&#x662F;&#x4E00;&#x79CD;&#x9075;&#x4ECE;&#x5148;&#x8FDB;&#x5148;&#x51FA;&#xFF08;FIFO&#xFF09;&#x5148;&#x6765;&#x5148;&#x670D;&#x52A1;&#x7684;&#x6709;&#x5E8F;&#x7684;&#x9879;.</p>
+<pre><code class="lang-js">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Queue</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> items = [];
+
+  <span class="hljs-keyword">this</span>.enqueue = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">element</span>) </span>{
+    items.push(element);
+  }
+  <span class="hljs-keyword">this</span>.dequeue = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.dequeue();
+  }
+  <span class="hljs-keyword">this</span>.isEmpty = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.length === <span class="hljs-number">0</span>;
+  }
+  <span class="hljs-keyword">this</span>.clear = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    items = [];
+  }
+  <span class="hljs-keyword">this</span>.size = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.size;
+  }
+  <span class="hljs-keyword">this</span>.print = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(items.toString())
+  }
+}
+
+<span class="hljs-string">`
+</span></code></pre>
+<pre><code class="lang-js">    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">PriorityQueue</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> items = [];
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">QueueElement</span>(<span class="hljs-params">element, priority</span>) </span>{
+    <span class="hljs-keyword">this</span>.element = element;
+    <span class="hljs-keyword">this</span>.priority = priority;
+  }
+
+  <span class="hljs-keyword">this</span>.enqueue = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">element, priority</span>) </span>{
+    <span class="hljs-keyword">var</span> queueElement = <span class="hljs-keyword">new</span> QueueElement(element, priority);
+    <span class="hljs-keyword">let</span> added = <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">// &#x5224;&#x65AD;&#x4F18;&#x5148;&#x7EA7;&#x522B;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i =<span class="hljs-number">0</span> ;i&lt; items.length; i++) {
+      <span class="hljs-keyword">if</span> (queueElement.priority &lt;= items[i].priority) {
+        items.splice(i, <span class="hljs-number">0</span>, queueElement);
+        added = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">break</span>;
+      }
+    }
+    <span class="hljs-comment">// &#x63D2;&#x5728;&#x6700;&#x540E;</span>
+    <span class="hljs-keyword">if</span>(!added) {
+      items.push(queueElement);
+    }
+  }
+
+  <span class="hljs-keyword">this</span>.dequeue = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.shift();
+  }
+
+  <span class="hljs-keyword">this</span>.isEmpty = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.length === <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-keyword">this</span>.size = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> items.length;
+  }
+
+  <span class="hljs-keyword">this</span>.print = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; items.length; i++) {
+      <span class="hljs-built_in">console</span>.log(items[i])
+    }
+  }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -211,7 +281,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Queue","level":"1.3","depth":1,"previous":{"title":"Stack","level":"1.2","depth":1,"path":"note/stack/stack.md","ref":"note/stack/stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/queue/queue.md","mtime":"2019-12-09T09:14:41.185Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-09T09:15:16.916Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Queue","level":"1.3","depth":1,"previous":{"title":"Stack","level":"1.2","depth":1,"path":"note/stack/stack.md","ref":"note/stack/stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"note/queue/queue.md","mtime":"2019-12-09T09:23:39.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-09T09:23:41.461Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
