@@ -1,4 +1,6 @@
 # Table of contents
 
-* [Initial page](README.md)
+* [数据结构算法笔记](README.md)
+* [Stack](note/stack/stack.md)
+* [Queue](note/queue/queue.md)
 
